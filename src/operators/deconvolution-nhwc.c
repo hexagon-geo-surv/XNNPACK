@@ -270,13 +270,17 @@ static enum xnn_status create_deconvolution2d_nhwc(
   deconvolution_op->type = operator_type;
   deconvolution_op->ukernel.type = ukernel_type;
   deconvolution_op->ukernel.igemm = (struct xnn_ukernel_igemm) {
-    .general_case = gemm_ukernels->igemm,
     .gemm_case = gemm_ukernels->gemm,
     .mr = mr,
     .nr = nr,
     .kr = kr,
     .sr = sr,
   };
+
+  assert(XNN_MAX_MR >= gemm_parameters->mr + 1);
+  for (size_t i = 1; i <= gemm_parameters->mr; i++) {
+    deconvolution_op->ukernel.igemm.general_case[i] = gemm_ukernels->igemm;
+  }
 
   deconvolution_op->state = xnn_run_state_invalid;
 
@@ -730,10 +734,10 @@ static enum xnn_status setup_conv_path(
       .ba_stride = input_height * input_width * deconvolution_op->input_pixel_stride << log2_input_element_size,
       .bc_stride = output_size * deconvolution_op->output_pixel_stride << log2_output_element_size,
       .log2_csize = log2_output_element_size,
-      .ukernel = deconvolution_op->ukernel.igemm.general_case,
+      .ukernel = deconvolution_op->ukernel.igemm.general_case[mr],
   };
-  if (output_size == 1 && deconvolution_op->ukernel.igemm.mr1_case.function[XNN_UARCH_DEFAULT] != NULL) {
-    deconvolution_op->context.igemm.ukernel = deconvolution_op->ukernel.igemm.mr1_case;
+  if (output_size == 1 && deconvolution_op->ukernel.igemm.general_case[1].function[XNN_UARCH_DEFAULT] != NULL) {
+    deconvolution_op->context.igemm.ukernel = deconvolution_op->ukernel.igemm.general_case[1];
   }
   memcpy(&deconvolution_op->context.igemm.params, params, params_size);
 
@@ -922,7 +926,7 @@ static enum xnn_status setup_subconv2d_path(
         .ba_stride = input_height * input_width * input_pixel_stride,
         .bc_stride = output_size * output_pixel_stride,
         .log2_csize = log2_output_element_size,
-        .ukernel = deconvolution_op->ukernel.igemm.general_case,
+        .ukernel = deconvolution_op->ukernel.igemm.general_case[mr],
     };
     memcpy(&deconvolution_op->context.subconv.params, params, params_size);
   }

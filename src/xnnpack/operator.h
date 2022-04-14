@@ -47,9 +47,10 @@ struct xnn_ukernel_dwconv2d {
   uint8_t output_width_tile;
 };
 
+#define XNN_MAX_MR 7
+
 struct xnn_ukernel_gemm {
-  struct xnn_hmp_gemm_ukernel general_case;
-  struct xnn_hmp_gemm_ukernel mr1_case;
+  struct xnn_hmp_gemm_ukernel general_case[XNN_MAX_MR];
   uint8_t mr;
   uint8_t nr;
   uint8_t kr;
@@ -57,8 +58,7 @@ struct xnn_ukernel_gemm {
 };
 
 struct xnn_ukernel_igemm {
-  struct xnn_hmp_igemm_ukernel general_case;
-  struct xnn_hmp_igemm_ukernel mr1_case;
+  struct xnn_hmp_igemm_ukernel general_case[XNN_MAX_MR];
   struct xnn_hmp_gemm_ukernel gemm_case;
   uint8_t mr;
   uint8_t nr;
