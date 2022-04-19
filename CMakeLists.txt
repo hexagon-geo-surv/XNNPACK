@@ -241,6 +241,7 @@ SET(SUBGRAPH_SRCS
   src/subgraph/static-reshape.c
   src/subgraph/static-resize-bilinear-2d.c
   src/subgraph/subtract.c
+  src/subgraph/transpose.c
   src/subgraph/unpooling-2d.c
   src/subgraph/validation.c
   src/tensor.c)

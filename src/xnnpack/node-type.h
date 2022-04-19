@@ -47,5 +47,6 @@ enum xnn_node_type {
   xnn_node_type_square_root,
   xnn_node_type_squared_difference,
   xnn_node_type_subtract,
+  xnn_node_type_static_transpose,
   xnn_node_type_unpooling_2d,
 };

@@ -1310,6 +1310,27 @@ enum xnn_status xnn_define_square_root(
   uint32_t output_id,
   uint32_t flags);
 
+/// Define a Transpose Node and add it to a Subgraph.
+///
+/// The Transpose Node transposes the input tensor using the permuation in perm.
+///
+/// @param subgraph - a Subgraph object that will own the created Node.
+/// @param input_id - Value ID for the input tensor. The input tensor must be an N-dimensional tensor defined in
+///                   the @a subgraph.
+/// @param output_id - Value ID for the output tensor. The output tensor must be an N-dimensional tensor defined
+///                    in the @a subgraph with each dimension equal to its corresponding permuted input dimension.
+/// @param num_dims - the number of input dimensions.
+/// @param perm - The permutation of the output tensor. The perm tensor must be a 1-dimensional tensor containing
+///               0 to N-1 in the permuted order.
+/// @param flags - binary features of the Transpose Node. No supported flags are currently defined.
+enum xnn_status xnn_define_static_transpose(
+  xnn_subgraph_t subgraph,
+  size_t num_dims,
+  const size_t* perm,
+  uint32_t input_id,
+  uint32_t output_id,
+  uint32_t flags);
+
 /// Weights cache is a cache for packed weights. It can be reused between runtimes.
 typedef struct xnn_weights_cache* xnn_weights_cache_t;
 

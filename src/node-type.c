@@ -98,6 +98,8 @@ const char* xnn_node_type_to_string(enum xnn_node_type type) {
       return "Squared Difference";
     case xnn_node_type_subtract:
       return "Subtract";
+    case xnn_node_type_static_transpose:
+      return "Static Transpose";
     case xnn_node_type_unpooling_2d:
       return "Unpooling 2D";
   }
