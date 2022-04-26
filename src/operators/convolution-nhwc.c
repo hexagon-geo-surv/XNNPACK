@@ -1213,6 +1213,11 @@ static enum xnn_status setup_convolution2d_nhwc(
     return xnn_status_success;
   }
 
+  if (convolution_op->weights_cache != NULL && !xnn_weights_cache_is_finalized(convolution_op->weights_cache)) {
+    xnn_log_error("weights cache needs to be finalized before setup");
+    return xnn_status_invalid_state;
+  }
+
   convolution_op->batch_size = batch_size;
   convolution_op->input_height = input_height;
   convolution_op->input_width = input_width;

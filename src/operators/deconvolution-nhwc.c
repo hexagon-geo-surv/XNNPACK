@@ -823,6 +823,11 @@ static enum xnn_status setup_subconv2d_path(
     output_width != deconvolution_op->last_output_width;
 
   if (deconvolution_op->weights_cache != NULL) {
+    if (!xnn_weights_cache_is_finalized(deconvolution_op->weights_cache)) {
+      xnn_log_error("weights cache needs to be finalized before setup");
+      return xnn_status_invalid_state;
+    }
+
     void* packed_weights_ptr = packed_weights(deconvolution_op);
     struct subconvolution_params* subconvolution_params = deconvolution_op->subconvolution_buffer;
     if (packed_weights_ptr != subconvolution_params->weights) {

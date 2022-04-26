@@ -197,6 +197,11 @@ static enum xnn_status setup_prelu_nc(
     return xnn_status_success;
   }
 
+  if (prelu_op->weights_cache != NULL && !xnn_weights_cache_is_finalized(prelu_op->weights_cache)) {
+    xnn_log_error("weights cache needs to be finalized before setup");
+    return xnn_status_invalid_state;
+  }
+
   const size_t channels = prelu_op->channels;
   prelu_op->context.prelu = (struct prelu_context) {
     .n = channels << log2_element_size,
