@@ -12,7 +12,7 @@ PROJECT(fxdiv-download NONE)
 
 INCLUDE(ExternalProject)
 ExternalProject_Add(fxdiv
-  URL https://github.com/tawiesn/FXdiv/archive/b408327ac2a15ec3e43352421954f5b1967701d1.zip
+  URL https://github.com/hexagon-geo-surv/FXdiv/archive/b408327ac2a15ec3e43352421954f5b1967701d1.zip
   URL_HASH SHA256=ab7dfb08829bee33dca38405d647868fb214ac685e379ec7ef2bebcd234cd44d
   SOURCE_DIR "${CMAKE_BINARY_DIR}/FXdiv-source"
   BINARY_DIR "${CMAKE_BINARY_DIR}/FXdiv"

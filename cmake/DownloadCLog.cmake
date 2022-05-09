@@ -12,7 +12,7 @@ PROJECT(clog-download NONE)
 
 INCLUDE(ExternalProject)
 ExternalProject_Add(clog
-  URL https://github.com/tawiesn/cpuinfo/archive/d5e37adf1406cf899d7d9ec1d317c47506ccb970.tar.gz
+  URL https://github.com/hexagon-geo-surv/cpuinfo/archive/d5e37adf1406cf899d7d9ec1d317c47506ccb970.tar.gz
   URL_HASH SHA256=3f2dc1970f397a0e59db72f9fca6ff144b216895c1d606f6c94a507c1e53a025
   SOURCE_DIR "${CMAKE_BINARY_DIR}/clog-source"
   BINARY_DIR "${CMAKE_BINARY_DIR}/clog"
